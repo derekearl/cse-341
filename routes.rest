@@ -9,3 +9,44 @@ GET http://localhost:8080/contacts/646ccdda0092b7e42525994b
 ###
 GET http://localhost:8080/contacts/646ccece0092b7e42525994d
 
+### Create Contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName":"Jimi",
+    "lastName":"Hendrix",
+    "email":"guitardude@mail.com",
+    "favoriteColor":"Purple",
+    "birthday":"11/27/1942"
+}
+
+### Create Contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName":"Jimmy",
+    "lastName":"Page",
+    "email":"lz@mail.com",
+    "favoriteColor":"red",
+    "birthday":"01/09/1944"
+}
+
+### PUT contact
+PUT http://localhost:8080/contacts/646cccf10092b7e425259948
+Content-Type: application/json
+
+{
+   "firstName":"Hailee",
+    "lastName":"Earl",
+    "email":"wifey@mail.com",
+    "favoriteColor":"Green",
+    "birthday":"04/07/1998"  
+}
+
+### GET contact
+GET http://localhost:8080/contacts/649763cc63ee2b90e57df813
+
+### DELETE contact
+DELETE http://localhost:8080/contacts/6497655563ee2b90e57df815
