@@ -40,8 +40,8 @@ Content-Type: application/json
 {
    "firstName":"Hailee",
     "lastName":"Earl",
-    "email":"hottiewife@mail.com",
-    "favoriteColor":"Lime Green",
+    "email":"mhottiewife@mail.com",
+    "favoriteColor":"Green",
     "birthday":"04/07/1998"  
 }
 
@@ -63,4 +63,27 @@ Content-Type: application/json
     "birthday":"11/27/1966"
 }
 
+### CREATE contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName":"Ozzy",
+    "lastName":"Osbourne",
+    "email":"crazyguitarist@mail.com",
+    "favoriteColor":"Midnight",
+    "birthday":"11/27/1950"
+}
+
+### CREATE contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName":"Sharon",
+    "lastName":"Osbourne",
+    "email":"crazytrain@mail.com",
+    "favoriteColor":"Midnight",
+    "birthday":"11/27/1950"
+}
 
