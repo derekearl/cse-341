@@ -40,8 +40,8 @@ Content-Type: application/json
 {
    "firstName":"Hailee",
     "lastName":"Earl",
-    "email":"wifey@mail.com",
-    "favoriteColor":"Green",
+    "email":"hottiewife@mail.com",
+    "favoriteColor":"Lime Green",
     "birthday":"04/07/1998"  
 }
 
@@ -50,3 +50,17 @@ GET http://localhost:8080/contacts/649763cc63ee2b90e57df813
 
 ### DELETE contact
 DELETE http://localhost:8080/contacts/6497655563ee2b90e57df815
+
+### CREATE contact
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+    "firstName":"Tom",
+    "lastName":"Morello",
+    "email":"crazyguitarist@mail.com",
+    "favoriteColor":"Perrywinkle",
+    "birthday":"11/27/1966"
+}
+
+
