@@ -1,24 +1,35 @@
 const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+const ObjectId =require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
-  const result = await mongodb.getDb().db().collection('contacts').find();
+
+const getAll = async (req, res, next) => {
+  try{
+  const result = await mongodb.getDb().db('Test').collection('contacts').find();
   result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(lists);
+    res.status(200).json(lists); // we just need the first one (the only one)
   });
+} catch {
+  res.status(200).json('nice try idiot');
+}
 };
 
-const getSingle = async (req, res) => {
+const getSingle = async (req, res, next) => {
+  try{
   const userId = new ObjectId(req.params.id);
-  const result = await mongodb.getDb().db().collection('contacts').find({ _id: userId });
+  const result = await mongodb.getDb().db('Test').collection('contacts').find({ _id: userId });
   result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(lists[0]);
+    res.status(200).json(lists[0]); // we just need the first one (the only one)
   });
+} catch {
+  res.status(200).json('oh no! that didnt work....');
+}
 };
 
 const createContact = async (req, res) => {
+  if (req.body.firstName != null && req.body.lastName != null && req.body.email != null  && req.body.favoriteColor != null && req.body.birthday != null){
+  try{
   const contact = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -26,17 +37,24 @@ const createContact = async (req, res) => {
     favoriteColor: req.body.favoriteColor,
     birthday: req.body.birthday
   };
-  const response = await mongodb.getDb().db().collection('contacts').insertOne(contact);
-  if (response.acknowledged) {
-    res.status(201).json(response);
-  } else {
-    res.status(500).json(response.error || 'Some error occurred while creating the contact.');
+    const response = await mongodb.getDb().db('Test').collection('contacts').insertOne(contact);
+    if (response .acknowledged) {
+    res.status(201).json(response)
+    } else {
+    res.status(500).json(response.error || 'an error occured during creation of contact');
   }
+} catch {
+  res.status(200).json('oh no! that didnt work....');
+}
+}
+else {
+  res.status(200).json('oh no! that didnt work....');
+}
 };
 
-const updateContact = async (req, res) => {
+const changeContact = async (req, res) => {
+  try{
   const userId = new ObjectId(req.params.id);
-  // be aware of updateOne if you only want to update specific fields
   const contact = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -44,34 +62,31 @@ const updateContact = async (req, res) => {
     favoriteColor: req.body.favoriteColor,
     birthday: req.body.birthday
   };
-  const response = await mongodb
-    .getDb()
-    .db()
-    .collection('contacts')
-    .replaceOne({ _id: userId }, contact);
-  console.log(response);
-  if (response.modifiedCount > 0) {
-    res.status(204).send();
-  } else {
-    res.status(500).json(response.error || 'Some error occurred while updating the contact.');
+    const response = await mongodb.getDb().db('Test').collection('contacts').replaceOne({_id: userId},contact);
+    if (response .acknowledged) {
+    res.status(201).json(response)
+    } else {
+    res.status(500).json(response.error || 'an error occured during creation of contact');
   }
+} catch {
+  res.status(200).json('oh no! that didnt work....');
+}
 };
 
 const deleteContact = async (req, res) => {
+  try{
   const userId = new ObjectId(req.params.id);
-  const response = await mongodb.getDb().db().collection('contacts').remove({ _id: userId }, true);
+  const response = await mongodb.getDb().db('Test').collection('contacts').deleteOne({ _id: userId }, true);
   console.log(response);
   if (response.deletedCount > 0) {
     res.status(204).send();
   } else {
-    res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
+    res.status(500).json(response.error || 'error while deleting contact')
   }
+} catch {
+  res.status(200).json('oh no! that didnt work....');
+}
 };
 
-module.exports = {
-  getAll,
-  getSingle,
-  createContact,
-  updateContact,
-  deleteContact
-};
+
+module.exports = { getAll,getSingle,createContact,changeContact,deleteContact};
